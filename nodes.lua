@@ -59,6 +59,11 @@ minetest.register_node("steel:grate_hard", {
 	groups = {cracky = 1, choppy = 1, dig_stone = 1},
 })
 
+
+local roof_box = {
+	type = "fixed",
+	fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2}
+}
 minetest.register_node("steel:roofing", {
 	description = "Corrugated steel roofing",
 	drawtype = "raillike",
@@ -67,12 +72,22 @@ minetest.register_node("steel:roofing", {
 	wield_image = "steel_corrugated_steel.png",
 	paramtype = "light",
 	walkable = true,
-	selection_box = {
-		type = "fixed",
-		fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2},
-	},
+	collision_box = roof_box,
+	selection_box = roof_box,
 	groups = {bendy = 2, snappy = 1, dig_immediate = 2, dig_generic = 1},
+	sounds = sound_api.node_sound_metal_defaults(),
 })
+
+if minetest.get_modpath("moreblocks") then
+	stairsplus:register_all("steel","roofing","steel:roofing", {
+		description = "Corrugated Steel Roofing",
+		tiles = {"steel_corrugated_steel.png"},
+		groups = {bendy = 2, snappy = 1, dig_immediate = 2, dig_generic = 1},
+		sounds = sound_api.node_sound_metal_defaults(),
+		}
+	)
+end
+
 
 -- Depreciated, kept around for legacy world compat
 minetest.register_node("steel:roofing_wall", {
